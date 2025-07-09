@@ -1,8 +1,8 @@
 package com.example.smoltestmod;
 
+import com.example.smoltestmod.datagen.DataGeneration;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -13,7 +13,6 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.slf4j.Logger;
 
 
@@ -32,6 +31,7 @@ public class SmolTestMod
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(Registration::addCreative);
+        modEventBus.addListener(DataGeneration::generate);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -45,11 +45,7 @@ public class SmolTestMod
         // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");
 
-        if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
-
-        LOGGER.info("{}{}", Config.magicNumberIntroduction, Config.magicNumber);
-
+        // Log some stuff from the config
         Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
     }
 

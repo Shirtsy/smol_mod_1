@@ -1,5 +1,6 @@
 package com.example.smoltestmod;
 
+import com.example.smoltestmod.blocks.SimpleBlock;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
@@ -7,8 +8,6 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -21,23 +20,8 @@ public class Registration {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, SmolTestMod.MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, SmolTestMod.MODID);
 
-    public static final RegistryObject<Block> EXAMPLE_BLOCK = BLOCKS.register(
-            "example_block",
-            () -> new Block(
-                    BlockBehaviour.Properties.of()
-                            .mapColor(MapColor.STONE)
-                            .requiresCorrectToolForDrops()
-                            .strength(1.0f, 0.0f)
-            )
-    );
-
-    public static final RegistryObject<Item> EXAMPLE_BLOCK_ITEM = ITEMS.register(
-            "example_block",
-            () -> new BlockItem(
-                    EXAMPLE_BLOCK.get(),
-                    new Item.Properties()
-            )
-    );
+    public static final RegistryObject<SimpleBlock> SIMPLE_BLOCK = BLOCKS.register("simple_block", SimpleBlock::new);
+    public static final RegistryObject<Item> SIMPLE_BLOCK_ITEM = ITEMS.register("simple_block", () -> new BlockItem(SIMPLE_BLOCK.get(), new Item.Properties()));
 
     public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register(
             "example_item",
@@ -57,7 +41,7 @@ public class Registration {
             .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
-                output.accept(EXAMPLE_BLOCK_ITEM.get());
+                output.accept(SIMPLE_BLOCK_ITEM.get());
             }).build());
 
     public static void init(IEventBus modEventBus) {
@@ -69,6 +53,6 @@ public class Registration {
     public static void addCreative(BuildCreativeModeTabContentsEvent event)
     {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
-            event.accept(EXAMPLE_BLOCK_ITEM);
+            event.accept(SIMPLE_BLOCK_ITEM);
     }
 }
