@@ -21,7 +21,7 @@ public class SmolTestMod
 {
 
     public static final String MODID = "smoltestmod";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public SmolTestMod(FMLJavaModLoadingContext context)
     {
@@ -43,7 +43,7 @@ public class SmolTestMod
     private void commonSetup(final FMLCommonSetupEvent event)
     {
         // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
+        LOGGER.debug("HELLO FROM COMMON SETUP");
 
         // Log some stuff from the config
         Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
@@ -54,7 +54,7 @@ public class SmolTestMod
     public void onServerStarting(ServerStartingEvent event)
     {
         // Do something when the server starts
-        LOGGER.info("HELLO from server starting");
+        LOGGER.debug("HELLO from server starting");
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
@@ -65,8 +65,8 @@ public class SmolTestMod
         public static void onClientSetup(FMLClientSetupEvent event)
         {
             // Some client setup code
-            LOGGER.info("HELLO FROM CLIENT SETUP");
-            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+            LOGGER.debug("HELLO FROM CLIENT SETUP");
+            LOGGER.debug("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
     }
 }

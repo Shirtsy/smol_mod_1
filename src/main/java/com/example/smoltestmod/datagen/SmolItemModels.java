@@ -18,5 +18,6 @@ public class SmolItemModels extends ItemModelProvider {
         withExistingParent(Registration.SIMPLE_BLOCK.getId().getPath(), modLoc("block/simple_block"));
         assert Registration.COMPLEX_BLOCK.getId() != null;
         withExistingParent(Registration.COMPLEX_BLOCK.getId().getPath(), modLoc("block/complex_block"));
+        basicItem(Registration.EXAMPLE_ITEM.get());
     }
 }
