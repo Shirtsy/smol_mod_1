@@ -1,4 +1,6 @@
 package com.example.smoltestmod.datagen;
 
-public class SmolLootTables {
+import net.minecraft.data.loot.packs.VanillaBlockLoot;
+
+public class SmolLootTables extends VanillaBlockLoot {
 }
