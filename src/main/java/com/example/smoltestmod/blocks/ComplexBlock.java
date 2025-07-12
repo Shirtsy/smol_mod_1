@@ -40,9 +40,10 @@ public class ComplexBlock extends Block implements EntityBlock {
         builder.add(HORIZONTAL_FACING);
     }
 
+    @Nullable
     @Override
-    public @Nullable BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
+    public  BlockState getStateForPlacement(BlockPlaceContext context) {
+        return defaultBlockState().setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
