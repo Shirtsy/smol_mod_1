@@ -15,6 +15,6 @@ public class SmolBlockStates extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         simpleBlock(Registration.SIMPLE_BLOCK.get());
-        simpleBlock(Registration.COMPLEX_BLOCK.get());
+        horizontalBlock(Registration.COMPLEX_BLOCK.get(), models().getExistingFile(modLoc("block/complex_block")));
     }
 }

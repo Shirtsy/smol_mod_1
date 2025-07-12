@@ -5,8 +5,11 @@ import com.example.smoltestmod.SmolTestMod;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ForgeBlockTagsProvider;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
@@ -20,10 +23,13 @@ public class SmolBlockTags extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(Registration.COMPLEX_BLOCK.get(), Registration.SIMPLE_BLOCK.get());
+                .add(Registration.SIMPLE_BLOCK.get())
+                .add(Registration.COMPLEX_BLOCK.get());
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(Registration.SIMPLE_BLOCK.get());
         tag(BlockTags.NEEDS_STONE_TOOL)
+                .add(Registration.COMPLEX_BLOCK.get());
+        tag(Tags.Blocks.OBSIDIAN) // Forge tag!
                 .add(Registration.COMPLEX_BLOCK.get());
     }
 }

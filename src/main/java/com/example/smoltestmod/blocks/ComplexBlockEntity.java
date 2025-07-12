@@ -44,11 +44,17 @@ public class ComplexBlockEntity extends BlockEntity {
     @Nonnull
     private ItemStackHandler createItemHandler() {
         return new ItemStackHandler(SLOT_COUNT) {
+
             @Override
             protected void onContentsChanged(int slot) {
                 setChanged();
                 assert level != null;
                 level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), SimpleBlock.UPDATE_ALL);
+            }
+
+            @Override
+            public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+                return stack.isDamageableItem() && stack.getDamageValue() > 0;
             }
         };
     }

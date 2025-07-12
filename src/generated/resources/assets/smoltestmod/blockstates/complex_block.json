@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=east": {
+      "model": "smoltestmod:block/complex_block",
+      "y": 90
+    },
+    "facing=north": {
       "model": "smoltestmod:block/complex_block"
+    },
+    "facing=south": {
+      "model": "smoltestmod:block/complex_block",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "smoltestmod:block/complex_block",
+      "y": 270
     }
   }
 }
