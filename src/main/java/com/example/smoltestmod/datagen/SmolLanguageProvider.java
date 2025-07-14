@@ -2,6 +2,7 @@ package com.example.smoltestmod.datagen;
 
 import com.example.smoltestmod.Registration;
 import com.example.smoltestmod.SmolTestMod;
+import com.example.smoltestmod.blocks.ComplexBlock;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
 
@@ -16,5 +17,6 @@ public class SmolLanguageProvider extends LanguageProvider {
         add(Registration.SIMPLE_BLOCK.get(), "Smol's Simple Block");
         add(Registration.COMPLEX_BLOCK.get(), "Smol's Complex Block");
         add(Registration.EXAMPLE_ITEM.get(), "Smol's Item");
+        add(ComplexBlock.SCREEN_TUTORIAL_COMPLEX, "Smol's Complex Block Screen");
     }
 }

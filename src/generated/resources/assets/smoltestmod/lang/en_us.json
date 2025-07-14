@@ -1,5 +1,6 @@
 {
   "block.smoltestmod.complex_block": "Smol's Complex Block",
   "block.smoltestmod.simple_block": "Smol's Simple Block",
-  "item.smoltestmod.example_item": "Smol's Item"
+  "item.smoltestmod.example_item": "Smol's Item",
+  "tutorial.screen.complex": "Smol's Complex Block Screen"
 }

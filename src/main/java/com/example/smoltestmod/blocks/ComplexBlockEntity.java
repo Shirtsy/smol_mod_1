@@ -91,6 +91,10 @@ public class ComplexBlockEntity extends BlockEntity {
         }
     }
 
+    public ItemStackHandler getItems() {
+        return items;
+    }
+
     // The getUpdateTag()/handleUpdateTag() pair is called whenever the client receives a new chunk
     // it hasn't seen before. i.e. the chunk is loaded
     @Override
