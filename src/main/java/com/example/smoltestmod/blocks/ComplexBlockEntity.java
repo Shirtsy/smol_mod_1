@@ -1,5 +1,6 @@
 package com.example.smoltestmod.blocks;
 
+import com.example.smoltestmod.tools.AdaptedItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -28,8 +29,21 @@ public class ComplexBlockEntity extends BlockEntity {
     public static int SLOT_COUNT = 1;
     public static int SLOT = 0;
 
+    public boolean extractable = false;
+
     private final ItemStackHandler items = createItemHandler();
-    private final LazyOptional<IItemHandler> itemHandler = LazyOptional.of(() -> items);
+    private final LazyOptional<IItemHandler> itemHandler = LazyOptional.of(
+            () -> new AdaptedItemHandler(items) {
+                @Override
+                public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
+                    if (!extractable) {
+                        return ItemStack.EMPTY;
+                    } else {
+                        return super.extractItem(slot, amount, simulate);
+                    }
+                }
+            }
+    );
 
     public ComplexBlockEntity(BlockPos pos, BlockState state) {
         super(COMPLEX_BLOCK_ENTITY.get(), pos, state);
@@ -136,16 +150,17 @@ public class ComplexBlockEntity extends BlockEntity {
             ItemStack stack = items.getStackInSlot(SLOT);
             if (!stack.isEmpty()) {
                 if (stack.isDamageableItem()) {
+                    this.extractable = false;
                     // Increase durability of item
                     int value = stack.getDamageValue();
                     if (value > 0) {
                         stack.setDamageValue(value - 1);
                     } else {
-                        ejectItem();
+                        this.extractable = true;
                     }
-                } else {
-                    ejectItem();
                 }
+            } else {
+                this.extractable = false;
             }
         }
     }
