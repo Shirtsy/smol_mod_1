@@ -38,7 +38,6 @@ public class Registration {
     public static final RegistryObject<MenuType<ComplexContainer>> COMPLEX_CONTAINER = MENU_TYPES.register("complex_block",
             () -> IForgeMenuType.create((windowId, inv, data) -> new ComplexContainer(windowId, inv.player, data.readBlockPos())));
 
-
     public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", ExampleItem::new);
 
     public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()

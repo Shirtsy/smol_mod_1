@@ -37,16 +37,30 @@ public class ComplexBlockRenderer implements BlockEntityRenderer<ComplexBlockEnt
                 long millis = System.currentTimeMillis();
 
                 poseStack.pushPose();
-                poseStack.pushPose();
                 poseStack.scale(.5f, .5f, .5f);
                 poseStack.translate(1f, 2.8f, 1f);
                 float angle = ((millis / 45) % 360);
                 poseStack.mulPose(Axis.YP.rotationDegrees(angle));
-                itemRenderer.renderStatic(stack, ItemDisplayContext.FIXED, LightTexture.FULL_BRIGHT, combinedOverlay, poseStack, bufferSource, Minecraft.getInstance().level, 0);
+                itemRenderer.renderStatic(
+                        stack,
+                        ItemDisplayContext.FIXED,
+                        LightTexture.FULL_BRIGHT,
+                        combinedOverlay,
+                        poseStack,
+                        bufferSource,
+                        Minecraft.getInstance().level,
+                        0
+                );
                 poseStack.popPose();
 
+                poseStack.pushPose();
                 poseStack.translate(0, 0.5f, 0);
-                renderBillboardQuadBright(poseStack, bufferSource.getBuffer(RenderType.translucent()), 0.5f, LIGHT);
+                renderBillboardQuadBright(
+                        poseStack,
+                        bufferSource.getBuffer(RenderType.translucent()),
+                        0.5f,
+                        LIGHT
+                );
                 poseStack.popPose();
             }
         });
@@ -55,16 +69,17 @@ public class ComplexBlockRenderer implements BlockEntityRenderer<ComplexBlockEnt
     private static void renderBillboardQuadBright(PoseStack matrixStack, VertexConsumer builder, float scale, ResourceLocation texture) {
         int b1 = LightTexture.FULL_BRIGHT >> 16 & 65535;
         int b2 = LightTexture.FULL_BRIGHT & 65535;
+        float depth = 0.2f;
         TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(texture);
         matrixStack.pushPose();
         matrixStack.translate(0.5, 0.95, 0.5);
         Quaternionf rotation = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
         matrixStack.mulPose(rotation);
         Matrix4f matrix = matrixStack.last().pose();
-        builder.vertex(matrix, -scale, -scale, 0.0f).color(255, 255, 255, 255).uv(sprite.getU0(), sprite.getV0()).uv2(b1, b2).normal(1, 0, 0).endVertex();
-        builder.vertex(matrix, -scale, scale, 0.0f).color(255, 255, 255, 255).uv(sprite.getU0(), sprite.getV1()).uv2(b1, b2).normal(1, 0, 0).endVertex();
-        builder.vertex(matrix, scale, scale, 0.0f).color(255, 255, 255, 255).uv(sprite.getU1(), sprite.getV1()).uv2(b1, b2).normal(1, 0, 0).endVertex();
-        builder.vertex(matrix, scale, -scale, 0.0f).color(255, 255, 255, 255).uv(sprite.getU1(), sprite.getV0()).uv2(b1, b2).normal(1, 0, 0).endVertex();
+        builder.vertex(matrix, -scale, -scale, depth).color(255, 255, 255, 255).uv(sprite.getU0(), sprite.getV0()).uv2(b1, b2).normal(1, 0, 0).endVertex();
+        builder.vertex(matrix, -scale, scale, depth).color(255, 255, 255, 255).uv(sprite.getU0(), sprite.getV1()).uv2(b1, b2).normal(1, 0, 0).endVertex();
+        builder.vertex(matrix, scale, scale, depth).color(255, 255, 255, 255).uv(sprite.getU1(), sprite.getV1()).uv2(b1, b2).normal(1, 0, 0).endVertex();
+        builder.vertex(matrix, scale, -scale, depth).color(255, 255, 255, 255).uv(sprite.getU1(), sprite.getV0()).uv2(b1, b2).normal(1, 0, 0).endVertex();
         matrixStack.popPose();
     }
 }

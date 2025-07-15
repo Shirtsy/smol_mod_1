@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -32,6 +33,7 @@ public class ComplexBlock extends Block implements EntityBlock {
 
     public static final String SCREEN_TUTORIAL_COMPLEX = "tutorial.screen.complex";
     public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final BooleanProperty LIT = BlockStateProperties.LIT;
     protected static final VoxelShape SHAPE = box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
 
 
@@ -40,6 +42,7 @@ public class ComplexBlock extends Block implements EntityBlock {
                 .strength(3.5f)
                 .requiresCorrectToolForDrops()
                 .sound(SoundType.METAL)
+                .lightLevel((BlockState state) -> state.getValue(LIT) ? 10 : 0)
         );
     }
 
@@ -47,12 +50,15 @@ public class ComplexBlock extends Block implements EntityBlock {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(HORIZONTAL_FACING);
+        builder.add(LIT);
     }
 
     @Nullable
     @Override
     public  BlockState getStateForPlacement(BlockPlaceContext context) {
-        return defaultBlockState().setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
+        return defaultBlockState()
+                .setValue(HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite())
+                .setValue(LIT, false);
     }
 
     @Override

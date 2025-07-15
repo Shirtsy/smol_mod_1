@@ -49,6 +49,17 @@ public class ComplexBlockEntity extends BlockEntity {
         super(COMPLEX_BLOCK_ENTITY.get(), pos, state);
     }
 
+    public void setLit(boolean lit) {
+        if (this.level != null && !this.level.isClientSide) {
+            BlockState currentState = this.getBlockState();
+            if (currentState.getValue(ComplexBlock.LIT) != lit) {
+                this.level.setBlock(this.worldPosition,
+                        currentState.setValue(ComplexBlock.LIT, lit),
+                        Block.UPDATE_ALL);
+            }
+        }
+    }
+
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
@@ -155,12 +166,15 @@ public class ComplexBlockEntity extends BlockEntity {
                     int value = stack.getDamageValue();
                     if (value > 0) {
                         stack.setDamageValue(value - 1);
+                        this.setLit(true);
                     } else {
                         this.extractable = true;
+                        this.setLit(false);
                     }
                 }
             } else {
                 this.extractable = false;
+                this.setLit(false);
             }
         }
     }
