@@ -24,4 +24,11 @@ public class ComplexScreen extends AbstractContainerScreen<ComplexContainer> {
         int relY = (this.height - this.imageHeight) / 2;
         graphics.blit(GUI, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
     }
+
+    @Override
+    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+        super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+        this.renderTooltip(pGuiGraphics, pMouseX, pMouseY);
+    }
+
 }
