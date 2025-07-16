@@ -8,7 +8,6 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -57,7 +56,7 @@ public class ComplexBlockRenderer implements BlockEntityRenderer<ComplexBlockEnt
                 poseStack.translate(0, 0.5f, 0);
                 renderBillboardQuadBright(
                         poseStack,
-                        bufferSource.getBuffer(RenderType.translucent()),
+                        bufferSource.getBuffer(SmolRenderType.translucentCutout()),
                         0.5f,
                         LIGHT
                 );
