@@ -39,6 +39,7 @@ public class ComplexBlockEntity extends BlockEntity {
                     if (!extractable) {
                         return ItemStack.EMPTY;
                     } else {
+                        if (!simulate) { extractable = false; }
                         return super.extractItem(slot, amount, simulate);
                     }
                 }
@@ -58,6 +59,10 @@ public class ComplexBlockEntity extends BlockEntity {
                         Block.UPDATE_ALL);
             }
         }
+    }
+
+    public boolean getLit() {
+        return this.getBlockState().getValue(ComplexBlock.LIT);
     }
 
     @Override
@@ -161,10 +166,10 @@ public class ComplexBlockEntity extends BlockEntity {
             ItemStack stack = items.getStackInSlot(SLOT);
             if (!stack.isEmpty()) {
                 if (stack.isDamageableItem()) {
-                    this.extractable = false;
                     // Increase durability of item
                     int value = stack.getDamageValue();
                     if (value > 0) {
+                        this.extractable = false;
                         stack.setDamageValue(value - 1);
                         this.setLit(true);
                     } else {

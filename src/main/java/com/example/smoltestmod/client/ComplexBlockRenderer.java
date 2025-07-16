@@ -52,15 +52,17 @@ public class ComplexBlockRenderer implements BlockEntityRenderer<ComplexBlockEnt
                 );
                 poseStack.popPose();
 
-                poseStack.pushPose();
-                poseStack.translate(0, 0.5f, 0);
-                renderBillboardQuadBright(
-                        poseStack,
-                        bufferSource.getBuffer(SmolRenderType.translucentCutout()),
-                        0.5f,
-                        LIGHT
-                );
-                poseStack.popPose();
+                if (be.getLit()) {
+                    poseStack.pushPose();
+                    poseStack.translate(0, 0.5f, 0);
+                    renderBillboardQuadBright(
+                            poseStack,
+                            bufferSource.getBuffer(SmolRenderType.translucentCutout()),
+                            0.5f,
+                            LIGHT
+                    );
+                    poseStack.popPose();
+                }
             }
         });
     }
