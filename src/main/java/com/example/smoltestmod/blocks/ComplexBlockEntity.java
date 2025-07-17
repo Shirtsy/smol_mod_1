@@ -54,9 +54,11 @@ public class ComplexBlockEntity extends BlockEntity {
         if (this.level != null && !this.level.isClientSide) {
             BlockState currentState = this.getBlockState();
             if (currentState.getValue(ComplexBlock.LIT) != lit) {
-                this.level.setBlock(this.worldPosition,
+                this.level.setBlock(
+                        this.worldPosition,
                         currentState.setValue(ComplexBlock.LIT, lit),
-                        Block.UPDATE_ALL);
+                        Block.UPDATE_ALL
+                );
             }
         }
     }
@@ -162,25 +164,23 @@ public class ComplexBlockEntity extends BlockEntity {
 
     public void tickServer() {
         assert level != null;
-        if (level.getGameTime() % 20 == 0) {
-            ItemStack stack = items.getStackInSlot(SLOT);
-            if (!stack.isEmpty()) {
-                if (stack.isDamageableItem()) {
-                    // Increase durability of item
-                    int value = stack.getDamageValue();
-                    if (value > 0) {
-                        this.extractable = false;
-                        stack.setDamageValue(value - 1);
-                        this.setLit(true);
-                    } else {
-                        this.extractable = true;
-                        this.setLit(false);
-                    }
+        ItemStack stack = items.getStackInSlot(SLOT);
+        if (!stack.isEmpty()) {
+            if (stack.isDamageableItem()) {
+                // Increase durability of item
+                int value = stack.getDamageValue();
+                if (value > 0) {
+                    this.extractable = false;
+                    if (level.getGameTime() % 20 == 0) { stack.setDamageValue(value - 1); }
+                    this.setLit(true);
+                } else {
+                    this.extractable = true;
+                    this.setLit(false);
                 }
-            } else {
-                this.extractable = false;
-                this.setLit(false);
             }
+        } else {
+            this.extractable = false;
+            this.setLit(false);
         }
     }
 
