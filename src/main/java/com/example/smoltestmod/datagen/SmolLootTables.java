@@ -11,9 +11,7 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.DynamicLoot;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
-import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
-import net.minecraft.world.level.storage.loot.functions.SetContainerContents;
+import net.minecraft.world.level.storage.loot.functions.*;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -26,7 +24,9 @@ public class SmolLootTables extends VanillaBlockLoot {
     @Override
     protected void generate() {
         dropSelf(Registration.SIMPLE_BLOCK.get());
-        createStandardTable(Registration.COMPLEX_BLOCK.get(), Registration.COMPLEX_BLOCK_ENTITY.get());
+        //createStandardTable(Registration.COMPLEX_BLOCK.get(), Registration.COMPLEX_BLOCK_ENTITY.get());
+        dropSelf(Registration.COMPLEX_BLOCK.get());
+
     }
 
     @Override
@@ -49,4 +49,5 @@ public class SmolLootTables extends VanillaBlockLoot {
                 );
         add(block, LootTable.lootTable().withPool(builder));
     }
+
 }
