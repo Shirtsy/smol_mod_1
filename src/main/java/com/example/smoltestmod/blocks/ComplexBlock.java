@@ -83,55 +83,62 @@ public class ComplexBlock extends Block implements EntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
         if (level.isClientSide) {
             return null;
-        } else {
-            return (lvl, pos, st, blockEntity) -> {
-                if (blockEntity instanceof ComplexBlockEntity bEntity) {
-                    bEntity.tickServer();
-                }
-            };
         }
+        return (lvl, pos, st, blockEntity) -> {
+            if (blockEntity instanceof ComplexBlockEntity bEntity) {
+                bEntity.tickServer();
+            }
+        };
     }
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult trace) {
-        if (!level.isClientSide) {
-            BlockEntity be = level.getBlockEntity(pos);
-            if (be instanceof ComplexBlockEntity) {
-                MenuProvider containerProvider = new MenuProvider() {
-                    @Override
-                    public Component getDisplayName() {
-                        return Component.translatable(SCREEN_TUTORIAL_COMPLEX);
-                    }
-
-                    @Override
-                    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
-                        return new ComplexContainer(windowId, playerEntity, pos);
-                    }
-                };
-                NetworkHooks.openScreen((ServerPlayer) player, containerProvider, be.getBlockPos());
-            } else {
-                throw new IllegalStateException("Our named container provider is missing!");
-            }
+        if (level.isClientSide) {
+            return InteractionResult.SUCCESS;
         }
+
+        BlockEntity be = level.getBlockEntity(pos);
+        if (!(be instanceof ComplexBlockEntity)) {
+            throw new IllegalStateException("Our named container provider is missing!");
+        }
+
+        MenuProvider containerProvider = new MenuProvider() {
+            @Override
+            public Component getDisplayName() {
+                return Component.translatable(SCREEN_TUTORIAL_COMPLEX);
+            }
+
+            @Override
+            public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
+                return new ComplexContainer(windowId, playerEntity, pos);
+            }
+        };
+
+        NetworkHooks.openScreen((ServerPlayer) player, containerProvider, be.getBlockPos());
         return InteractionResult.SUCCESS;
     }
 
     @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock())) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity != null) {
-                LazyOptional<IItemHandler> itemHandlerOptional = blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER);
-                itemHandlerOptional.ifPresent(itemHandler -> {
-                    for (int i = 0; i < itemHandler.getSlots(); i++) {
-                        ItemStack stack = itemHandler.getStackInSlot(i);
-                        if (!stack.isEmpty()) {
-                            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), stack);
-                        }
-                    }
-                });
-            }
-            super.onRemove(state, level, pos, newState, movedByPiston);
+        if (state.is(newState.getBlock())) {
+            return;
         }
+
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity == null) {
+            super.onRemove(state, level, pos, newState, movedByPiston);
+            return;
+        }
+
+        LazyOptional<IItemHandler> itemHandlerOptional = blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER);
+        itemHandlerOptional.ifPresent(itemHandler -> {
+            for (int i = 0; i < itemHandler.getSlots(); i++) {
+                ItemStack stack = itemHandler.getStackInSlot(i);
+                if (!stack.isEmpty()) {
+                    Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), stack);
+                }
+            }
+        });
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 }

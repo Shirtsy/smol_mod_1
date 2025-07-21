@@ -38,18 +38,19 @@ public class SimpleBlock extends Block {
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        if (!level.isClientSide) {
-            level.explode(
-                    null,
-                    pos.getX() + 0.5,
-                    pos.getY() + 0.5,
-                    pos.getZ() + 0.5,
-                    10f,
-                    true,
-                    Level.ExplosionInteraction.MOB
-            );
-            return InteractionResult.SUCCESS;
+        if (level.isClientSide) {
+            return InteractionResult.PASS;
         }
-        return InteractionResult.PASS;
+        level.explode(
+                null,
+                pos.getX() + 0.5,
+                pos.getY() + 0.5,
+                pos.getZ() + 0.5,
+                10f,
+                true,
+                Level.ExplosionInteraction.MOB
+        );
+        return InteractionResult.SUCCESS;
     }
+
 }

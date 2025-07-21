@@ -57,37 +57,39 @@ public class ComplexContainer extends AbstractContainerMenu {
     public ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
-        if (slot.hasItem()) {
-            ItemStack stack = slot.getItem();
-            itemstack = stack.copy();
-            if (index < SLOT_COUNT) {
-                if (!this.moveItemStackTo(stack, SLOT_COUNT, Inventory.INVENTORY_SIZE + SLOT_COUNT, true)) {
-                    return ItemStack.EMPTY;
-                }
-            }
-            if (!this.moveItemStackTo(stack, SLOT, SLOT+1, false)) {
-                if (index < 27 + SLOT_COUNT) {
-                    if (!this.moveItemStackTo(stack, 27 + SLOT_COUNT, 36 + SLOT_COUNT, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (index < Inventory.INVENTORY_SIZE + SLOT_COUNT && !this.moveItemStackTo(stack, SLOT_COUNT, 27 + SLOT_COUNT, false)) {
-                    return ItemStack.EMPTY;
-                }
-            }
-
-            if (stack.isEmpty()) {
-                slot.set(ItemStack.EMPTY);
-            } else {
-                slot.setChanged();
-            }
-
-            if (stack.getCount() == itemstack.getCount()) {
-                return ItemStack.EMPTY;
-            }
-
-            slot.onTake(player, stack);
+        if (!slot.hasItem()) {
+            return itemstack;
         }
 
+        ItemStack stack = slot.getItem();
+        itemstack = stack.copy();
+        if (index < SLOT_COUNT) {
+            if (!this.moveItemStackTo(stack, SLOT_COUNT, Inventory.INVENTORY_SIZE + SLOT_COUNT, true)) {
+                return ItemStack.EMPTY;
+            }
+        }
+
+        if (!this.moveItemStackTo(stack, SLOT, SLOT+1, false)) {
+            if (index < 27 + SLOT_COUNT) {
+                if (!this.moveItemStackTo(stack, 27 + SLOT_COUNT, 36 + SLOT_COUNT, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (index < Inventory.INVENTORY_SIZE + SLOT_COUNT && !this.moveItemStackTo(stack, SLOT_COUNT, 27 + SLOT_COUNT, false)) {
+                return ItemStack.EMPTY;
+            }
+        }
+
+        if (stack.isEmpty()) {
+            slot.set(ItemStack.EMPTY);
+        } else {
+            slot.setChanged();
+        }
+
+        if (stack.getCount() == itemstack.getCount()) {
+            return ItemStack.EMPTY;
+        }
+
+        slot.onTake(player, stack);
         return itemstack;
     }
 

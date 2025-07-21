@@ -38,10 +38,11 @@ public class ComplexBlockEntity extends BlockEntity {
                 public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
                     if (!extractable) {
                         return ItemStack.EMPTY;
-                    } else {
-                        if (!simulate) { extractable = false; }
-                        return super.extractItem(slot, amount, simulate);
                     }
+                    if (!simulate) {
+                        extractable = false;
+                    }
+                    return super.extractItem(slot, amount, simulate);
                 }
             }
     );
@@ -51,15 +52,17 @@ public class ComplexBlockEntity extends BlockEntity {
     }
 
     public void setLit(boolean lit) {
-        if (this.level != null && !this.level.isClientSide) {
-            BlockState currentState = this.getBlockState();
-            if (currentState.getValue(ComplexBlock.LIT) != lit) {
-                this.level.setBlock(
-                        this.worldPosition,
-                        currentState.setValue(ComplexBlock.LIT, lit),
-                        Block.UPDATE_ALL
-                );
-            }
+        if (this.level == null || this.level.isClientSide) {
+            return;
+        }
+
+        BlockState currentState = this.getBlockState();
+        if (currentState.getValue(ComplexBlock.LIT) != lit) {
+            this.level.setBlock(
+                    this.worldPosition,
+                    currentState.setValue(ComplexBlock.LIT, lit),
+                    Block.UPDATE_ALL
+            );
         }
     }
 
@@ -76,7 +79,6 @@ public class ComplexBlockEntity extends BlockEntity {
     @Nonnull
     private ItemStackHandler createItemHandler() {
         return new ItemStackHandler(SLOT_COUNT) {
-
             @Override
             protected void onContentsChanged(int slot) {
                 setChanged();
@@ -165,21 +167,24 @@ public class ComplexBlockEntity extends BlockEntity {
     public void tickServer() {
         assert level != null;
         ItemStack stack = items.getStackInSlot(SLOT);
-        if (!stack.isEmpty()) {
-            if (stack.isDamageableItem()) {
-                // Increase durability of item
-                int value = stack.getDamageValue();
-                if (value > 0) {
-                    this.extractable = false;
-                    if (level.getGameTime() % 20 == 0) { stack.setDamageValue(value - 1); }
-                    this.setLit(true);
-                } else {
-                    this.extractable = true;
-                    this.setLit(false);
-                }
-            }
-        } else {
+
+        if (stack.isEmpty()) {
             this.extractable = false;
+            this.setLit(false);
+            return;
+        }
+
+        if (!stack.isDamageableItem()) {
+            return;
+        }
+
+        int value = stack.getDamageValue();
+        if (value > 0) {
+            this.extractable = false;
+            if (level.getGameTime() % 20 == 0) { stack.setDamageValue(value - 1); }
+            this.setLit(true);
+        } else {
+            this.extractable = true;
             this.setLit(false);
         }
     }
