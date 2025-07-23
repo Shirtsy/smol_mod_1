@@ -1,9 +1,6 @@
 package com.example.smoltestmod;
 
-import com.example.smoltestmod.blocks.ComplexBlock;
-import com.example.smoltestmod.blocks.ComplexBlockEntity;
-import com.example.smoltestmod.blocks.ComplexContainer;
-import com.example.smoltestmod.blocks.SimpleBlock;
+import com.example.smoltestmod.blocks.*;
 import com.example.smoltestmod.items.ExampleItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
@@ -34,9 +31,17 @@ public class Registration {
     public static final RegistryObject<ComplexBlock> COMPLEX_BLOCK = BLOCKS.register("complex_block", ComplexBlock::new);
     public static final RegistryObject<Item> COMPLEX_BLOCK_ITEM = ITEMS.register("complex_block", () -> new BlockItem(COMPLEX_BLOCK.get(), new Item.Properties()));
     public static final RegistryObject<BlockEntityType<ComplexBlockEntity>> COMPLEX_BLOCK_ENTITY = BLOCK_ENTITIES.register("complex_block",
-            () -> BlockEntityType.Builder.of(ComplexBlockEntity::new, COMPLEX_BLOCK.get()).build(null));
+            () -> BlockEntityType.Builder.of(ComplexBlockEntity::new, COMPLEX_BLOCK.get()).build(null)
+    );
     public static final RegistryObject<MenuType<ComplexContainer>> COMPLEX_CONTAINER = MENU_TYPES.register("complex_block",
-            () -> IForgeMenuType.create((windowId, inv, data) -> new ComplexContainer(windowId, inv.player, data.readBlockPos())));
+            () -> IForgeMenuType.create((windowId, inv, data) -> new ComplexContainer(windowId, inv.player, data.readBlockPos()))
+    );
+
+    public static final RegistryObject<GeneratorBlock> GENERATOR_BLOCK = BLOCKS.register("generator_block", GeneratorBlock::new);
+    public static final RegistryObject<Item> GENERATOR_BLOCK_ITEM = ITEMS.register("generator_block", () -> new BlockItem(GENERATOR_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockEntityType<GeneratorBlockEntity>> GENERATOR_BLOCK_ENTITY = BLOCK_ENTITIES.register("generator_block",
+            () -> BlockEntityType.Builder.of(GeneratorBlockEntity::new, GENERATOR_BLOCK.get()).build(null)
+    );
 
     public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", ExampleItem::new);
 
