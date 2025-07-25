@@ -123,13 +123,11 @@ public class ComplexBlock extends Block implements EntityBlock {
         if (state.is(newState.getBlock())) {
             return;
         }
-
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity == null) {
             super.onRemove(state, level, pos, newState, movedByPiston);
             return;
         }
-
         LazyOptional<IItemHandler> itemHandlerOptional = blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER);
         itemHandlerOptional.ifPresent(itemHandler -> {
             for (int i = 0; i < itemHandler.getSlots(); i++) {

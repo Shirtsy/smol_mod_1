@@ -25,25 +25,55 @@ public class Registration {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, SmolTestMod.MODID);
     public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, SmolTestMod.MODID);
 
-    public static final RegistryObject<SimpleBlock> SIMPLE_BLOCK = BLOCKS.register("simple_block", SimpleBlock::new);
-    public static final RegistryObject<Item> SIMPLE_BLOCK_ITEM = ITEMS.register("simple_block", () -> new BlockItem(SIMPLE_BLOCK.get(), new Item.Properties()));
-
-    public static final RegistryObject<ComplexBlock> COMPLEX_BLOCK = BLOCKS.register("complex_block", ComplexBlock::new);
-    public static final RegistryObject<Item> COMPLEX_BLOCK_ITEM = ITEMS.register("complex_block", () -> new BlockItem(COMPLEX_BLOCK.get(), new Item.Properties()));
-    public static final RegistryObject<BlockEntityType<ComplexBlockEntity>> COMPLEX_BLOCK_ENTITY = BLOCK_ENTITIES.register("complex_block",
-            () -> BlockEntityType.Builder.of(ComplexBlockEntity::new, COMPLEX_BLOCK.get()).build(null)
+    public static final RegistryObject<SimpleBlock> SIMPLE_BLOCK = BLOCKS.register(
+            "simple_block",
+            SimpleBlock::new
     );
-    public static final RegistryObject<MenuType<ComplexContainer>> COMPLEX_CONTAINER = MENU_TYPES.register("complex_block",
+    public static final RegistryObject<Item> SIMPLE_BLOCK_ITEM = ITEMS.register(
+            "simple_block",
+            () -> new BlockItem(SIMPLE_BLOCK.get(), new Item.Properties())
+    );
+
+    public static final RegistryObject<ComplexBlock> COMPLEX_BLOCK = BLOCKS.register(
+            "complex_block",
+            ComplexBlock::new
+    );
+    public static final RegistryObject<Item> COMPLEX_BLOCK_ITEM = ITEMS.register(
+            "complex_block",
+            () -> new BlockItem(COMPLEX_BLOCK.get(), new Item.Properties())
+    );
+    public static final RegistryObject<BlockEntityType<ComplexBlockEntity>> COMPLEX_BLOCK_ENTITY = BLOCK_ENTITIES.register(
+            "complex_block",
+            () -> BlockEntityType.Builder.of(
+                    ComplexBlockEntity::new,
+                    COMPLEX_BLOCK.get()
+            ).build(null)
+    );
+    public static final RegistryObject<MenuType<ComplexContainer>> COMPLEX_CONTAINER = MENU_TYPES.register(
+            "complex_block",
             () -> IForgeMenuType.create((windowId, inv, data) -> new ComplexContainer(windowId, inv.player, data.readBlockPos()))
     );
 
-    public static final RegistryObject<GeneratorBlock> GENERATOR_BLOCK = BLOCKS.register("generator_block", GeneratorBlock::new);
-    public static final RegistryObject<Item> GENERATOR_BLOCK_ITEM = ITEMS.register("generator_block", () -> new BlockItem(GENERATOR_BLOCK.get(), new Item.Properties()));
-    public static final RegistryObject<BlockEntityType<GeneratorBlockEntity>> GENERATOR_BLOCK_ENTITY = BLOCK_ENTITIES.register("generator_block",
-            () -> BlockEntityType.Builder.of(GeneratorBlockEntity::new, GENERATOR_BLOCK.get()).build(null)
+    public static final RegistryObject<GeneratorBlock> GENERATOR_BLOCK = BLOCKS.register(
+            "generator_block",
+            GeneratorBlock::new
+    );
+    public static final RegistryObject<Item> GENERATOR_BLOCK_ITEM = ITEMS.register(
+            "generator_block",
+            () -> new BlockItem(GENERATOR_BLOCK.get(), new Item.Properties())
+    );
+    public static final RegistryObject<BlockEntityType<GeneratorBlockEntity>> GENERATOR_BLOCK_ENTITY = BLOCK_ENTITIES.register(
+            "generator_block",
+            () -> BlockEntityType.Builder.of(
+                    GeneratorBlockEntity::new,
+                    GENERATOR_BLOCK.get()
+            ).build(null)
     );
 
-    public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register("example_item", ExampleItem::new);
+    public static final RegistryObject<Item> EXAMPLE_ITEM = ITEMS.register(
+            "example_item",
+            ExampleItem::new
+    );
 
     public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
             .withTabsBefore(CreativeModeTabs.COMBAT)
