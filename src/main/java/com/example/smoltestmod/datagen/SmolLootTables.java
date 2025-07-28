@@ -26,7 +26,7 @@ public class SmolLootTables extends VanillaBlockLoot {
         dropSelf(Registration.SIMPLE_BLOCK.get());
         //createStandardTable(Registration.COMPLEX_BLOCK.get(), Registration.COMPLEX_BLOCK_ENTITY.get());
         dropSelf(Registration.COMPLEX_BLOCK.get());
-
+        dropSelf(Registration.GENERATOR_BLOCK.get());
     }
 
     @Override

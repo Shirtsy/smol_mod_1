@@ -1,6 +1,7 @@
 {
   "values": [
     "smoltestmod:simple_block",
-    "smoltestmod:complex_block"
+    "smoltestmod:complex_block",
+    "smoltestmod:generator_block"
   ]
 }

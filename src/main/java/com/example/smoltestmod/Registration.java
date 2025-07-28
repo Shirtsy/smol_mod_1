@@ -82,6 +82,7 @@ public class Registration {
                 output.accept(EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
                 output.accept(SIMPLE_BLOCK_ITEM.get());
                 output.accept(COMPLEX_BLOCK_ITEM.get());
+                output.accept(GENERATOR_BLOCK_ITEM.get());
             }).build());
 
     public static void init(IEventBus modEventBus) {

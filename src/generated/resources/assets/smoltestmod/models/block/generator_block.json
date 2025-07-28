@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "smoltestmod:block/complex_block",
+    "side": "smoltestmod:block/simple_block",
+    "top": "smoltestmod:block/simple_block"
+  }
+}
