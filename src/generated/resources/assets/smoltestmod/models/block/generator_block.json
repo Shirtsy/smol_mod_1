@@ -1,8 +1,12 @@
 {
-  "parent": "minecraft:block/orientable",
+  "parent": "minecraft:block/cube",
   "textures": {
-    "front": "smoltestmod:block/complex_block",
-    "side": "smoltestmod:block/simple_block",
-    "top": "smoltestmod:block/simple_block"
+    "down": "smoltestmod:block/simple_block/down",
+    "east": "smoltestmod:block/simple_block/east",
+    "north": "smoltestmod:block/simple_block/north",
+    "particle": "smoltestmod:block/simple_block",
+    "south": "smoltestmod:block/simple_block/south",
+    "up": "smoltestmod:block/simple_block/up",
+    "west": "smoltestmod:block/simple_block/west"
   }
 }

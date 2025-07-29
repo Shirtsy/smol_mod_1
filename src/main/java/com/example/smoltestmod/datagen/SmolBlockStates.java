@@ -21,9 +21,15 @@ public class SmolBlockStates extends BlockStateProvider {
         );
         horizontalBlock(
                 Registration.GENERATOR_BLOCK.get(),
-                modLoc("block/simple_block"),
-                modLoc("block/complex_block"),
-                modLoc("block/simple_block")
+                models().cube(
+                        Registration.GENERATOR_BLOCK.getId().getPath(),
+                        modLoc("block/simple_block/down"),
+                        modLoc("block/simple_block/up"),
+                        modLoc("block/simple_block/north"),
+                        modLoc("block/simple_block/south"),
+                        modLoc("block/simple_block/east"),
+                        modLoc("block/simple_block/west")
+                ).texture("particle", "block/simple_block")
         );
     }
 
